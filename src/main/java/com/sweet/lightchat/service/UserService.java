@@ -23,10 +23,8 @@ public class UserService {
         return ourInstance;
     }
 
-    private UserService() {
-    }
     public List<User> getFriendByUserId(String userId) {
-        return getFriendByUserId(userId,false);
+        return getFriendByUserId(userId, false);
     }
 
     public List<User> getFriendByUserId(String userId, boolean newData) {

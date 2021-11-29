@@ -59,7 +59,7 @@ public class LightChatApplication extends Application {
 
     private static void reLogin(Channel channelCache) {
         LoginReq req = new LoginReq();
-        req.setUserName(Cache.currentUser.getUsername());
+        req.setUsername(Cache.currentUser.getUsername());
         req.setPassword(Cache.currentUser.getPassword());
         req.setDateTime(DateUtils.now());
         System.out.println("重新登录！");

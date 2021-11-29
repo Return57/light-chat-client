@@ -13,8 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class OkHttpUtils {
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectionPool(new ConnectionPool(20,
-                    5*60, TimeUnit.SECONDS))
+            .connectionPool(new ConnectionPool(20, 5 * 60, TimeUnit.SECONDS))
             .connectTimeout(3, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
@@ -22,14 +21,15 @@ public class OkHttpUtils {
 
     /**
      * 根据map获取get请求参数
-     * @param queries 参数集合
+     *
+     * @param param 参数集合
      * @return 组装参数后的url
      */
-    private static String getQueryString(String url, Map<String,String> queries){
+    private static String getQueryString(String url, Map<String, String> param) {
         StringBuilder sb = new StringBuilder(url);
-        if (queries != null && queries.keySet().size() > 0) {
+        if (param != null && param.keySet().size() > 0) {
             boolean firstFlag = true;
-            for (Map.Entry<String,String> entry : queries.entrySet()) {
+            for (Map.Entry<String, String> entry : param.entrySet()) {
                 if (firstFlag) {
                     sb.append("?").append(entry.getKey()).append("=").append(entry.getValue());
                     firstFlag = false;
@@ -43,10 +43,11 @@ public class OkHttpUtils {
 
     /**
      * 调用okhttp的newCall方法
+     *
      * @param request 请求
      * @return 调用返回的json
      */
-    private static String execNewCall(Request request){
+    private static String execNewCall(Request request) {
         Response response = null;
         try {
             response = okHttpClient.newCall(request).execute();
@@ -66,12 +67,13 @@ public class OkHttpUtils {
 
     /**
      * get method
+     *
      * @param url     请求的url
      * @param queries 请求的参数，在浏览器？后面的数据，没有可以传null
      * @return json字符串
      */
     public static String get(String url, Map<String, String> queries) {
-        url = getQueryString(url,queries);
+        url = getQueryString(url, queries);
         Map<String, String> headerMap = new HashMap<>();
         headerMap.put("token", Cache.currentUser.getToken());
         Request request = new Request.Builder()
@@ -111,11 +113,13 @@ public class OkHttpUtils {
 
     /**
      * Post请求发送JSON数据....{"name":"zhangsan","pwd":"123456"}
-     * @param url 请求的url
+     *
+     * @param url        请求的url
      * @param jsonParams JSON字符串的参数
      */
     public static String postJsonParams(String url, String jsonParams) {
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonParams);
+        MediaType mediaType = MediaType.Companion.parse("application/json;charset=utf-8");
+        RequestBody requestBody = RequestBody.Companion.create(jsonParams, mediaType);
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)

@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
 
-<?import javafx.scene.shape.Circle?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <Pane prefHeight="160.0" prefWidth="540.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="220.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="https://pica.zhimg.com/80/v2-a05070b496825ebe8db8841e76b6bcb7_720w.jpg?source=1940ef5c" />
-               </image>
-               <clip>
-                  <Circle fx:id="circle" fill="aqua" centerX="30" centerY="30">
-                     <radius>30</radius>
-                  </Circle>
-               </clip>
-            </ImageView>
-         </children>
-      </Pane>
-   </top>
-   <center>
-      <Pane prefHeight="168.0" prefWidth="540.0" BorderPane.alignment="CENTER">
-         <children>
-            <TextField layoutX="120.0" layoutY="42.0" prefHeight="40.0" prefWidth="300.0" />
-            <PasswordField layoutX="120.0" layoutY="90.0" prefHeight="40.0" prefWidth="300.0" />
-            <CheckBox layoutX="114.0" layoutY="140.0" mnemonicParsing="false" text="自动登录" />
-            <CheckBox layoutX="228.0" layoutY="140.0" mnemonicParsing="false" text="记住密码" />
-            <Button layoutX="351.0" layoutY="135.0" mnemonicParsing="false" text="找回密码" />
-            <Button layoutX="119.0" layoutY="195.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="304.0" text="登录" />
-         </children>
-      </Pane>
-   </center>
-</BorderPane>
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sweet.lightchat.controller.LoginController">
+   <children>
+      <BorderPane prefHeight="410.0" prefWidth="540.0">
+         <top>
+            <Pane prefHeight="160.0" prefWidth="540.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="220.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="https://pica.zhimg.com/80/v2-a05070b496825ebe8db8841e76b6bcb7_720w.jpg?source=1940ef5c" />
+                     </image>
+                     <clip>
+                        <Circle fx:id="circle" centerX="30" centerY="30" fill="aqua">
+                           <radius>30</radius>
+                        </Circle>
+                     </clip>
+                  </ImageView>
+               </children>
+            </Pane>
+         </top>
+         <center>
+            <Pane prefHeight="168.0" prefWidth="540.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextField fx:id="username" layoutX="120.0" layoutY="42.0" prefHeight="40.0" prefWidth="300.0" />
+                  <PasswordField fx:id="password" layoutX="120.0" layoutY="90.0" prefHeight="40.0" prefWidth="300.0" />
+                  <CheckBox layoutX="114.0" layoutY="140.0" mnemonicParsing="false" text="自动登录" />
+                  <CheckBox layoutX="228.0" layoutY="140.0" mnemonicParsing="false" text="记住密码" />
+                  <Button layoutX="351.0" layoutY="135.0" mnemonicParsing="false" text="找回密码" />
+                  <Button layoutX="119.0" layoutY="195.0" mnemonicParsing="false" onAction="#login" prefHeight="42.0" prefWidth="304.0" text="登录" />
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
