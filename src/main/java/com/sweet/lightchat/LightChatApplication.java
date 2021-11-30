@@ -12,9 +12,11 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -25,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2021/11/24 11:28
  * @description
  */
+@Slf4j
 public class LightChatApplication extends Application {
     public static volatile Channel channelCache = null;
 
@@ -40,7 +43,7 @@ public class LightChatApplication extends Application {
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
         scheduledExecutorService.scheduleAtFixedRate(() -> {
             if (channelCache == null || !channelCache.isActive() || !channelCache.isOpen() || !channelCache.isWritable()) {
-                System.out.println(channelCache.id());
+                log.info("channel ID : ", channelCache.id());
                 connect(bootstrap, 1);
             }
         }, 30, 30, TimeUnit.SECONDS);
@@ -51,9 +54,12 @@ public class LightChatApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(LightChatApplication.class.getResource("Login.fxml"));
+
         Scene scene = new Scene(fxmlLoader.load(), 540, 420);
         stage.setTitle("轻聊");
         stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResource("icon.png").toExternalForm()));
+        Cache.ControllerMap.put("login", stage);
         stage.show();
     }
 
@@ -62,16 +68,16 @@ public class LightChatApplication extends Application {
         req.setUsername(Cache.currentUser.getUsername());
         req.setPassword(Cache.currentUser.getPassword());
         req.setDateTime(DateUtils.now());
-        System.out.println("重新登录！");
-        System.out.println(channelCache.id());
+        log.info("重新登录！");
+        log.info("channel ID : ", channelCache.id());
         channelCache.writeAndFlush(req);
     }
 
 
-    private static void connect(Bootstrap bootstrap, final int retry) {
+    private static void connect(Bootstrap bootstrap, int retry) {
         bootstrap.connect(ServerConfig.IP, ServerConfig.NETTY_PORT).addListener(future -> {
             if (future.isSuccess()) {
-                System.out.println("启动连接成功");
+                log.info("启动连接成功");
                 boolean needLogin = false;
                 if (channelCache != null) {
                     channelCache.close();
@@ -82,7 +88,7 @@ public class LightChatApplication extends Application {
                     reLogin(channelCache);
                 }
             } else if (retry == 0) {
-                System.out.println("不在重试连接");
+                log.info("不在重试连接");
             } else {
                 int sleepSecond = 1 << retry;
                 Thread.sleep(sleepSecond);

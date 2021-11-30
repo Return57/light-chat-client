@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <jmxConfigurator/>
+    <property name="log_dir" value="E:/log/chat/client/"/>
+    <property name="maxHistory" value="5"/>
+    <property name="APP_NAME" value="client"/>
+    <property name="logPattern"
+              value="@ %d{yyyy-MM-dd HH:mm:ss.SSS} ${APP_NAME} %ThreadNum %-5level %logger{56} %method %L | %msg%n"/>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8" class="com.sweet.lightchat.logging.LogBackExEncoder">
+            <pattern>${logPattern}</pattern>
+        </encoder>
+    </appender>
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="com.sweet.lightchat.logging.LogLevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${log_dir}/evt_${APP_NAME}_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+        </rollingPolicy>
+        <encoder charset="UTF-8" class="com.sweet.lightchat.logging.LogBackExEncoder">
+            <pattern>
+                ${logPattern}
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="asyncErrorAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="ERROR"/>
+    </appender>
+    <appender name="AGGREGATION" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="com.sweet.lightchat.logging.LogAggregationFilter">
+            <level>TRACE</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${log_dir}/log_${APP_NAME}_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8" class="com.sweet.lightchat.logging.LogBackExEncoder">
+            <pattern>
+                ${logPattern}
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="asyncAGGREGATIONAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="AGGREGATION"/>
+    </appender>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8" class="com.sweet.lightchat.logging.LogBackExEncoder">
+            <pattern>
+                ${logPattern}
+            </pattern>
+        </encoder>
+    </appender>
+<!--    <appender name="SendErrorMsgAppender" class="com.sweet.lightchat.logging.SendErrorMsgAppender">-->
+<!--        <encoder charset="UTF-8" class="com.sweet.lightchat.logging.LogBackExEncoder">-->
+<!--            <pattern>-->
+<!--                ${logPattern}-->
+<!--            </pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+    <!-- root级别DEBUG -->
+    <root>
+        <level value="info"/>
+        <appender-ref ref="asyncErrorAppender"/>
+        <appender-ref ref="console"/>
+        <appender-ref ref="asyncAGGREGATIONAppender"/>
+<!--        <appender-ref ref="SendErrorMsgAppender"/>-->
+    </root>
+    <logger name="org.springframework.batch.core.listener.AbstractListenerFactoryBean" level="OFF"/>
+</configuration>
+

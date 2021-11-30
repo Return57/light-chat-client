@@ -13,10 +13,10 @@ import java.util.Map;
  * @date 2021/11/28 23:08
  * @description
  */
-public interface Cache {
-    Map<String, Stage> ControllerMap = new HashMap<>();
-    User currentUser = new User();
-    Map<String, Integer> userMessageNumMap = new HashMap<>();
-    List<User> cacheUsers = new ArrayList<>();
-    Map<String, User> cacheUserMap = new HashMap<>();
+public class Cache {
+    public static Map<String, Stage> ControllerMap = new HashMap<>();
+    public static User currentUser = new User();
+    public static Map<String, Integer> userMessageNumMap = new HashMap<>();
+    public static List<User> cacheUsers = new ArrayList<>();
+    public static Map<String, User> cacheUserMap = new HashMap<>();
 }

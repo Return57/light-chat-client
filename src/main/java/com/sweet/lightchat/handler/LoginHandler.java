@@ -23,7 +23,7 @@ import java.util.List;
  */
 @ChannelHandler.Sharable
 public class LoginHandler extends SimpleChannelInboundHandler<LoginResp> {
-    private LoginHandler() {}
+
     public static LoginHandler INSTANCE = new LoginHandler();
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginResp msg) throws Exception {
@@ -47,7 +47,6 @@ public class LoginHandler extends SimpleChannelInboundHandler<LoginResp> {
                 main.setTitle("【轻聊】       " + msg.getUserName() + " --在线， id: " + msg.getUserId());
                 main.show();
             });
-
         } else {
             Stage login = Cache.ControllerMap.get("login");
             UiBaseService.INSTANCE.printErrorMsg(login, msg.getReason());
