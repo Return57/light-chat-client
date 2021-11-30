@@ -1,5 +1,6 @@
 package com.sweet.lightchat;
 
+import com.sweet.lightchat.config.ApplicationConfig;
 import com.sweet.lightchat.config.ServerConfig;
 import com.sweet.lightchat.netty.ClientChannelInitializer;
 import com.sweet.lightchat.request.LoginReq;
@@ -16,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
+import javafx.stage.StageStyle;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.Executors;
@@ -53,13 +55,14 @@ public class LightChatApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(LightChatApplication.class.getResource("Login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(LightChatApplication.class.getResource("/fxml/Login.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), 540, 420);
-        stage.setTitle("轻聊");
+        stage.setTitle(ApplicationConfig.APP_NAME);
         stage.setScene(scene);
-        stage.getIcons().add(new Image(getClass().getResource("icon.png").toExternalForm()));
+        stage.getIcons().add(new Image(getClass().getResource("/images/icon.png").toExternalForm()));
         Cache.ControllerMap.put("login", stage);
+        stage.setResizable(false); // 不能改变窗口大小
         stage.show();
     }
 

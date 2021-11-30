@@ -12,16 +12,7 @@
          <top>
             <Pane prefHeight="160.0" prefWidth="540.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="220.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="https://pica.zhimg.com/80/v2-a05070b496825ebe8db8841e76b6bcb7_720w.jpg?source=1940ef5c" />
-                     </image>
-                     <clip>
-                        <Circle fx:id="circle" centerX="30" centerY="30" fill="aqua">
-                           <radius>30</radius>
-                        </Circle>
-                     </clip>
-                  </ImageView>
+                  <Circle fx:id="icon" fill="DODGERBLUE" layoutX="270.0" layoutY="160.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
             </Pane>
          </top>

@@ -7,6 +7,9 @@ import com.sweet.lightchat.util.DateUtils;
 import io.netty.channel.Channel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 
 /**
@@ -19,20 +22,16 @@ public class LoginController {
     private TextField username;
     @FXML
     private TextField password;
+    @FXML
+    private Circle icon;
 
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        username.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-//            if (KeyCode.ENTER == event.getCode()) {
-//                login();
-//            }
-//        });
-//        password.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-//            if (KeyCode.ENTER == event.getCode()) {
-//                login();
-//            }
-//        });
-//    }
+    @FXML
+    public void initialize() {
+        // 设置头像
+        Image img = new Image("/images/icon.png");
+        icon.setFill(new ImagePattern(img));
+    }
+
 
     public void login() {
         LoginReq req = new LoginReq();
